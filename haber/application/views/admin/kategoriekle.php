@@ -47,5 +47,5 @@
             </div>
         </div>
     </section>
-
-    <?php $this->load->view('admin/include/footer'); ?>
+</div>
+<?php $this->load->view('admin/include/footer'); ?>

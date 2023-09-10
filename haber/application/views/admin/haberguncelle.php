@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Kategori</label>
-                                    <select class="form-control" name="kategoriId">
+                                    <select class="form-control" name="kategoriId" id="categoryList">
                                         <?php foreach ($categories as $category) : ?>
                                             <option <?= ($haber->kategoriId == $category->kategoriId) ? "selected" : "" ?> class="" value="<?= $category->kategoriId ?>"><?= $category->kategoriAdi ?></option>
                                         <?php endforeach ?>
@@ -62,6 +62,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Ana Sayfa Gösterim Yeri</label>
+                                    <div class="form-check">
+                                        <div class="row">
+                                            <div class="col-sm-4"><input class="form-check-input" type="radio" <?= ($haber->gosterim=='sol') ? 'checked' : '';?> value="sol" name="checkbutton">Sol</div>
+                                            <div class="col-sm-4"><input class="form-check-input" type="radio" <?= ($haber->gosterim=='orta') ? 'checked' : '';?> value="orta" name="checkbutton">Orta</div>
+                                            <div class="col-sm-4"><input class="form-check-input" type="radio" <?= ($haber->gosterim=='sag') ? 'checked' : '';?> value="sag" name="checkbutton">Sağ</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -73,5 +83,12 @@
             </div>
         </div>
     </section>
-
+</div>
     <?php $this->load->view('admin/include/footer'); ?>
+    <script>
+    $(document).ready(function() {
+        $('#categoryList').select2({
+            theme: 'bootstrap4'
+        });
+    });
+</script>

@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Kategori</label>
-                                    <select class="form-control" name="kategoriId">
+                                    <select class="form-control" name="kategoriId" id="categoryList">
                                         <option value="0">Kategori Seçiniz</option>
                                         <?php foreach ($categories as $row) : ?>
                                             <option value="<?= $row->kategoriId ?>"><?= $row->kategoriAdi ?></option>
@@ -59,6 +59,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Ana Sayfa Gösterim Yeri</label>
+                                    <div class="form-check">
+                                        <div class="row">
+                                            <div class="col-sm-4"><input class="form-check-input" type="radio" value="sol" name="checkbutton" id="flexCheckChecked">Sol</div>
+                                            <div class="col-sm-4"><input class="form-check-input" type="radio" value="orta" name="checkbutton" id="flexCheckChecked">Orta</div>
+                                            <div class="col-sm-4"><input class="form-check-input" type="radio" value="sag" name="checkbutton" id="flexCheckChecked">Sağ</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -70,5 +80,12 @@
             </div>
         </div>
     </section>
-
-    <?php $this->load->view('admin/include/footer'); ?>
+</div>
+<?php $this->load->view('admin/include/footer'); ?>
+<script>
+    $(document).ready(function() {
+        $('#categoryList').select2({
+            theme: 'bootstrap4'
+        });
+    });
+</script>

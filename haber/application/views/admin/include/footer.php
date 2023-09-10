@@ -1,8 +1,7 @@
 <!-- <footer class="main-footer fixed-bottom"> -->
 <footer class="main-footer">
-  <strong>Copyright &copy; 2023 <a href="https://www.dveb.com.tr/">Dveb</a>.</strong>
-  Esma Sahra BALCI <div class="float-right d-none d-sm-inline-block">
-  </div>
+  <strong>Copyright &copy; <?php echo date('Y'); ?> <a href="https://www.dveb.com.tr/">Dveb</a></strong>
+  Esma Sahra BALCI <div class="float-right d-none d-sm-inline-block"></div>
 </footer>
 
 <!-- Control Sidebar -->
@@ -66,7 +65,11 @@
 <script src="<?php echo base_url('assets/back/'); ?>dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url('assets/back/'); ?>dist/js/demo.js"></script>
-
+<!-- select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- Sortable -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <!-- Page specific script -->
 <script>
   $(function() {
