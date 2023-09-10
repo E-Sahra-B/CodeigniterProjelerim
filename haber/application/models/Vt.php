@@ -31,7 +31,7 @@ class Vt extends CI_Model
         return $result;
     }
 
-    function kategorilerlist() 
+    function kategorilerlist()
     {
         $result = $this->db->select('*')
             ->from('kategori')
@@ -53,9 +53,6 @@ class Vt extends CI_Model
 
     function haberGetir($id)
     {
-        // $result = $this->db->query("SELECT * FROM haber 
-        // INNER JOIN kategori
-        // ON haber.kategoriId=kategori.kategoriId WHERE haber.id={$id}")->row();
         $result = $this->db->select('*')
             ->from('haber')
             ->join('kategori', 'haber.kategoriId = kategori.kategoriId')
@@ -75,14 +72,8 @@ class Vt extends CI_Model
         }
     }
 
-    // function kategoriekleme($data = array())
-    // {
-    //     $result = $this->db->insert('kategori', $data);
-    //     return $result;
-    // }
     function kategoriekleme($data = array())
     {
-       
         $result = $this->db->insert('kategori', $data);
         return $result;
     }
@@ -118,11 +109,6 @@ class Vt extends CI_Model
 
     function son4Haber()
     {
-        // $result = $this->db->query('SELECT * FROM haber AS h 
-        // INNER JOIN kategori AS k 
-        // ON h.kategoriId=k.kategoriId 
-        // ORDER BY h.eklemeTarihi DESC 
-        // LIMIT 4')->result();
         $result = $this->db->select('*')
             ->from('haber AS h')
             ->join('kategori AS k', 'h.kategoriId=k.kategoriId', 'INNER')
@@ -134,8 +120,6 @@ class Vt extends CI_Model
 
     function kategoriyeGoreHaberler($sefKategoriAdi)
     {
-        // $result = $this->db->query("SELECT * FROM haber AS h INNER JOIN kategori AS k ON h.kategoriId=k.kategoriId 
-        // WHERE k.sefKategoriAdi='{$sefKategoriAdi}'")->result();
         $result = $this->db->select('*')
             ->from('haber AS h')
             ->join('kategori AS k', 'h.kategoriId = k.kategoriId', 'INNER')
@@ -145,8 +129,6 @@ class Vt extends CI_Model
     }
     function kategoriyeGoreHaber($sefBaslik)
     {
-        // $result = $this->db->query("SELECT * FROM haber AS h INNER JOIN kategori AS k ON h.kategoriId=k.kategoriId 
-        // WHERE h.id='{$id}'")->row();
         $result = $this->db->select('*')
             ->from('haber AS h')
             ->join('kategori AS k', 'h.kategoriId = k.kategoriId', 'INNER')
@@ -156,9 +138,6 @@ class Vt extends CI_Model
     }
     function kategoriHaberInnerJoin()
     {
-        // $result = $this->db->query('SELECT * FROM haber AS h 
-        // INNER JOIN kategori AS k 
-        // ON h.kategoriId=k.kategoriId ORDER BY h.eklemeTarihi DESC')->result();
         $result = $this->db->select('*')
             ->from('haber AS h')
             ->join('kategori AS k', 'h.kategoriId = k.kategoriId', 'INNER')
@@ -166,22 +145,18 @@ class Vt extends CI_Model
             ->get()->result();
         return $result;
     }
-    function kategoriSayisi() // toplam kategori sayısını veriyor
+    function kategoriSayisi()
     {
         $result = $this->db->select('COUNT(*) as kategori_sayisi')->get('kategori')->row();
         return $result->kategori_sayisi;
     }
-    function haberSayisi() // toplam haber sayısını veriyor
+    function haberSayisi()
     {
         $result = $this->db->select('COUNT(*) as haber_sayisi')->get('haber')->row();
         return $result->haber_sayisi;
     }
     function totalProductsOfCategories()
     {
-        // $result = $this->db->query('SELECT kategori.kategoriAdi as ad, kategori.sefKategoriAdi AS seoad,COUNT(haber.kategoriId) AS say FROM haber
-        // INNER JOIN kategori ON haber.kategoriId = kategori.kategoriId
-        // GROUP BY kategori.kategoriId')->result();
-
         $result = $this->db->select('kategori.kategoriAdi as ad, kategori.sefKategoriAdi AS seoad, COUNT(haber.kategoriId) AS say')
             ->from('haber')
             ->join('kategori', 'haber.kategoriId = kategori.kategoriId')
@@ -199,19 +174,19 @@ class Vt extends CI_Model
             ->limit($limit, $offset)
             ->get()
             ->result();
-
         return $result;
     }
+
     public function get_category_counts($sefKategoriAdi)
-    { //sef kategori adına göre haber sayısını veriyor
+    {
         $this->db->select('COUNT(haber.kategoriId) AS say');
         $this->db->from('haber');
         $this->db->join('kategori', 'haber.kategoriId = kategori.kategoriId');
         $this->db->where('kategori.sefKategoriAdi', $sefKategoriAdi);
         $query = $this->db->get();
-
         return $query->row()->say;
     }
+
     function kategoriyeGoreHaberlerLimitli($sefKategoriAdi, $limit, $offset)
     {
         $this->db->select('*')
@@ -219,7 +194,6 @@ class Vt extends CI_Model
             ->join('kategori AS k', 'h.kategoriId = k.kategoriId', 'INNER')
             ->where('k.sefKategoriAdi', $sefKategoriAdi)
             ->limit($limit, $offset);
-
         $query = $this->db->get();
         return $query->result();
     }
@@ -238,10 +212,6 @@ class Vt extends CI_Model
     }
     function sol3()
     {
-        // $result = $this->db->query('SELECT * FROM haber AS h 
-        // INNER JOIN kategori AS k ON h.kategoriId=k.kategoriId 
-        // WHERE h.gosterim=' . "sol" . ' ORDER BY h.eklemeTarihi DESC LIMIT 3;')->result();
-
         $result = $this->db->select('*')
             ->from('haber AS h')
             ->join('kategori AS k', 'h.kategoriId = k.kategoriId')
@@ -298,71 +268,57 @@ class Vt extends CI_Model
         return $result;
     }
 
-    // function select2($search)
-    // {
-    //     $this->db->select('kategoriAdi');
-    //     $this->db->from('kategori'); 
-    //     $this->db->like('kategoriId', $search); 
-    //     $query = $this->db->get();
-    //     return $query;
-    // }
-
     function insert($from, $data = array())
-    {//$this->vt->update('haber' , $values);
+    {
         $result = $this->db
-            ->insert($from,$data);
+            ->insert($from, $data);
         return $result;
     }
 
-    function single($from, $where = array(),$sutun=null,$siralama=null)
-    {//$this->vt->single('haber', array('id'=>$id));
+    function single($from, $where = array(), $sutun = null, $siralama = null)
+    {
         $result = $this->db
             ->from($from)
             ->where($where)
-            ->order_by($sutun,$siralama)
+            ->order_by($sutun, $siralama)
             ->get()
             ->row();
         return $result;
     }
 
     function update($from, $where = array(), $data = array())
-    { //$this->vt->update('haber', array('id'=>$id), $values);
+    {
         $results = $this->db
             ->where($where)
             ->update($from, $data);
         return $results;
     }
 
-    //$this->db->where('kategoriId', $id);
-    //$this->db->delete('kategori');
     function delete($from, $where)
-    { //$this->vt->delete('haber', array('id'=>$id), $values);
-        // $results = $this->db
-        //     ->where($where)
-        //     ->delete($from, array($where=>$id));
-        
+    {
         $results = $this->db
-        ->where($where)
-        ->delete($from);
+            ->where($where)
+            ->delete($from);
         return $results;
     }
 
-    function session($type,$name,$message=null){
-        $ci=get_instance();
-        if ($type=='oku') {
+    function session($type, $name, $message = null)
+    {
+        $ci = get_instance();
+        if ($type == 'oku') {
             return $ci->session->userdata($name);
         }
-        if ($type=='yaz') {
-            return $ci->session->set_userdata($name,$message);
+        if ($type == 'yaz') {
+            return $ci->session->set_userdata($name, $message);
         }
-        
     }
 
-    function geridon() {
+    function geridon()
+    {
         return redirect($_SERVER['HTTP_REFERER']);
     }
 
-    function list($from) 
+    function list($from)
     {
         $result = $this->db->select('*')
             ->from($from)
@@ -370,7 +326,7 @@ class Vt extends CI_Model
         return $result;
     }
 
-    function detail($from,$where=array())
+    function detail($from, $where = array())
     {
         $result = $this->db->select('*')
             ->from($from)
@@ -378,17 +334,4 @@ class Vt extends CI_Model
             ->get()->row();
         return $result;
     }
-
-    // function grupby($from,$where= array(),$grup){
-    //     $result = $this->db
-    //         ->from($from)
-    //         ->where($where)
-    //         ->group_by($grup)
-    //         ->get()
-    //         ->result();
-    //     return $result;
-    // }
-
-    //https://esma.dvebdemo.com.tr/
-    //https://esma.dvebdemo.com.tr/admin
 }

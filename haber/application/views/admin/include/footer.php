@@ -1,6 +1,6 @@
 <!-- <footer class="main-footer fixed-bottom"> -->
 <footer class="main-footer">
-  <strong>Copyright &copy; <?php echo date('Y'); ?> <a href="https://www.dveb.com.tr/">Dveb</a></strong>
+  <strong>Copyright &copy; <?php echo date('Y'); ?> <a href="#">#</a></strong>
   Esma Sahra BALCI <div class="float-right d-none d-sm-inline-block"></div>
 </footer>
 

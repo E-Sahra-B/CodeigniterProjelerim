@@ -1,16 +1,8 @@
 <?php
-// function elma() {
-//     echo "elma";
-// }
-// <?php elma();? > //helper dan çagrılıyor autoload/helper da helper'a verilen isim tanımlanmalı view kullanımı
-
-
-function active($menu) //menu aktif
+function active($menu)
 {
     $ci = get_instance();
     echo ($ci->uri->segment(2) == $menu) ? "active" : "";
-    //return ($this->uri->segment(3) == $menu) ? "active" : "";
-    // <li class="<?php active('panel');? >">
 }
 
 function postval($name)
@@ -19,39 +11,21 @@ function postval($name)
     return $ci->input->post($name, true);
 }
 
-// function do_upload() // sitedeki
-// {
-//     $config['upload_path']          = './uploads/';
-//     $config['allowed_types']        = 'gif|jpg|png';
-//     $config['max_size']             = 100;
-//     $config['max_width']            = 1024;
-//     $config['max_height']           = 768;
-
-//     $this->load->library('upload', $config);
-//     if (!$this->upload->do_upload('userfile')) {
-//         $error = array('error' => $this->upload->display_errors());
-//         $this->load->view('upload_form', $error);
-//     } else {
-//         $data = array('upload_data' => $this->upload->data());
-//         $this->load->view('upload_success', $data);
-//     }
-// }
-
-function resimupload($config, $file_input_name){
-    $ci =& get_instance();
+function resimupload($config, $file_input_name)
+{
+    $ci = &get_instance();
     $ci->upload->initialize($config);
 
     if ($ci->upload->do_upload($file_input_name)) {
         $resim = $ci->upload->data();
-        return base_url().$config['upload_path'].$resim['file_name'];
-    }else{
+        return base_url() . $config['upload_path'] . $resim['file_name'];
+    } else {
         //return $ci->upload->display_errors();
         uyarimesaji("danger", $ci->upload->display_errors());
-        //redirect('admin/resimyukle');
     }
 }
 
-function geridon() 
+function geridon()
 {
     echo redirect($_SERVER['HTTP_REFERER']);
 }
@@ -145,49 +119,34 @@ function getReturnTime($date)
     return $interval;
 }
 
-// function countKategori($sefKategoriAdi)
-// {
-//     $ci =& get_instance();
-//     $ci->load->database();
-//     $ci->db->where('kategoriId',$sefKategoriAdi);
-//     $ci->db->from('haber');
-//     $sonuc=$ci->db->count_all_results();
-//     return $sonuc;
-
-// }
-
-
-function paylasimzamani($date){
-    $date=strtotime($date);
-    $zamanfarki=time()-$date;
-    $saniye=$zamanfarki;
-    $dakika=round($zamanfarki/60);
-    $saat=round($zamanfarki/3600);
-    $gun=round($zamanfarki/86400);
-    $hafta=round($zamanfarki/604800);
-    $ay=round($zamanfarki/2419200);
-    $yil=round($zamanfarki/29030400);
-    if($saniye < 60){
-        if($saniye==0){
+function paylasimzamani($date)
+{
+    $date = strtotime($date);
+    $zamanfarki = time() - $date;
+    $saniye = $zamanfarki;
+    $dakika = round($zamanfarki / 60);
+    $saat = round($zamanfarki / 3600);
+    $gun = round($zamanfarki / 86400);
+    $hafta = round($zamanfarki / 604800);
+    $ay = round($zamanfarki / 2419200);
+    $yil = round($zamanfarki / 29030400);
+    if ($saniye < 60) {
+        if ($saniye == 0) {
             return "az önce";
-        }else {
-            return $saniye." saniye önce";
+        } else {
+            return $saniye . " saniye önce";
         }
-    }else if ($dakika<60) {
-        return $dakika." dakika önce";
-    }else if ($saat<24) {
-        return $saat." saat önce";
-    }else if ($gun<7) {
-        return $gun." gun önce";
-    }else if ($hafta<4) {
-        return $hafta." hafta önce";
-    }else if ($ay<12) {
-        return $ay." ay önce";
-    }else {
-        return $yil." yıl önce";
+    } else if ($dakika < 60) {
+        return $dakika . " dakika önce";
+    } else if ($saat < 24) {
+        return $saat . " saat önce";
+    } else if ($gun < 7) {
+        return $gun . " gun önce";
+    } else if ($hafta < 4) {
+        return $hafta . " hafta önce";
+    } else if ($ay < 12) {
+        return $ay . " ay önce";
+    } else {
+        return $yil . " yıl önce";
     }
 }
-
-
-//https://esma.dvebdemo.com.tr/
-//https://esma.dvebdemo.com.tr/admin

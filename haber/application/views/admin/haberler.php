@@ -8,10 +8,6 @@
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
-
-      <!-- < ?php if ($this->session->flashdata('success')) {
-        echo "<div class='alert alert-success'>" . $this->session->flashdata('success') . "</div>";
-      } ?> -->
       <?= uyarimesajioku(); ?>
       <!-- Main row -->
       <div class="card">
