@@ -259,3 +259,4 @@
         </div>
     </nav>
 </header>
+<span class="base_url hidden"><?php echo base_url(); ?></span>

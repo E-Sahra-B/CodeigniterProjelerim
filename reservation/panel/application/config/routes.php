@@ -8,4 +8,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route["dashboard"]         = "dashboard/index";
 $route["dashboard/(.*)"]    = "dashboard/$1";
 
+$route["roomcategory"]      = "roomcategory/index";
+$route["roomcategory/(.*)"] = "roomcategory/$1";
+
 $route["^(.*)"] = "index/$1";
