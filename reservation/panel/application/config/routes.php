@@ -11,4 +11,7 @@ $route["dashboard/(.*)"]    = "dashboard/$1";
 $route["roomcategory"]      = "roomcategory/index";
 $route["roomcategory/(.*)"] = "roomcategory/$1";
 
+$route["roomproperties"]      = "roomproperties/index";
+$route["roomproperties/(.*)"] = "roomproperties/$1";
+
 $route["^(.*)"] = "index/$1";
