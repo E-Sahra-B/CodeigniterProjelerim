@@ -7,6 +7,7 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <thead>
+                            <th>Sırala</th>
                             <th>id</th>
                             <th>Başlık</th>
                             <th>isActive</th>
@@ -15,6 +16,7 @@
                         <tbody class="sortableList" postUrl="roomcategory/rankUpdate">
                             <?php foreach ($rows as $row) { ?>
                                 <tr id="sortId-<?php echo $row->id; ?>">
+                                    <td><i class="fa fa-retweet fa-lg text-primary"></i></td>
                                     <td>#<?php echo $row->id; ?></td>
                                     <td><?php echo $row->title; ?></td>
                                     <td>
@@ -22,10 +24,10 @@
                                     </td>
                                     <td>
                                         <a href="<?php echo base_url("roomcategory/editPage/$row->id"); ?>">
-                                            <i class="fa fa-edit" style="font-size:16px;"></i>
+                                            <i class="fa fa-edit fa-lg"></i>
                                         </a>
                                         <a href="<?php echo base_url("roomcategory/delete/$row->id"); ?>">
-                                            <i class="fa fa-trash" style="font-size:16px;"></i>
+                                            <i class="fa fa-trash fa-lg"></i>
                                         </a>
                                     </td>
                                 </tr>
