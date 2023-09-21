@@ -21,6 +21,13 @@ class Room extends CI_Controller
 		$this->load->view("new_room");
 	}
 
+	public function editPage($id)
+	{
+		$viewData = new stdClass();
+		$viewData->row = $this->room_model->get(array("id" => $id));
+		$this->load->view("edit_room", $viewData);
+	}
+
 	public function add()
 	{
 		$room_properties     = implode(";", $this->input->post("room_properties"));
@@ -42,6 +49,32 @@ class Room extends CI_Controller
 			redirect(base_url("room"));
 		} else {
 			redirect(base_url("room/newPage"));
+		}
+	}
+
+	public function edit($id)
+	{
+		!empty($this->input->post("room_properties")) ? $room_properties     = implode(";", $this->input->post("room_properties")) : "";
+		!empty($this->input->post("room_extra_services")) ? $room_extra_services = implode(";", $this->input->post("room_extra_services")) : "";
+		$data = array(
+			"room_code" 			=> $this->input->post("room_code"),
+			"title" 				=> $this->input->post("title"),
+			"detail" 				=> $this->input->post("detail"),
+			"size" 					=> $this->input->post("size"),
+			"default_price" 		=> $this->input->post("default_price"),
+			"room_type_id" 			=> $this->input->post("room_type_id"),
+			"room_capacity" 		=> $this->input->post("room_capacity"),
+			"room_properties" 		=> $room_properties,
+			"room_extra_services"	=> $room_extra_services
+		);
+		$update = $this->room_model->update(
+			array("id"	=> $id),
+			$data
+		);
+		if ($update) {
+			redirect(base_url("room"));
+		} else {
+			redirect(base_url("room/editPage/$id"));
 		}
 	}
 
