@@ -86,8 +86,9 @@
                         <div class="form-group">
                             <label>Ekstra Servisler</label>
                             <select name="room_extra_services[]" class="form-control select2" multiple="multiple" data-placeholder="Ekstra Servis Seçiniz" style="width: 100%;">
-                                <option value="1">Ekstra Servis 1</option>
-                                <option value="2">Ekstra Servis 2</option>
+                                <?php foreach (get_room_extra_services(array("isActive" => 1)) as $extra_service) { ?>
+                                    <option value="<?php echo $extra_service->id; ?>"><?php echo $extra_service->title; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

@@ -81,11 +81,14 @@
                         <div class="form-group">
                             <label>Ekstra Servisler</label>
                             <select name="room_extra_services[]" class="form-control select2" multiple="multiple" data-placeholder="Ekstra Servis Seçiniz" style="width: 100%;">
-                                <option value="1">Ekstra Servis 1</option>
-                                <option value="2">Ekstra Servis 2</option>
+                                <?php foreach (get_room_extra_services(array("isActive" => 1)) as $extra_service) {
+                                    $extra_service_secimler = explode(";", $row->room_extra_services); ?>?>
+                                <option <?= in_array($extra_service->id, $extra_service_secimler) ? "selected" : "" ?> class="" value="<?= $extra_service->id ?>"><?= $extra_service->title ?></option>
+                            <?php } ?>
                             </select>
                         </div>
                     </div>
+
                     <!-- /.box-body -->
                     <div class="clearfix"></div>
                     <div class="box-footer">

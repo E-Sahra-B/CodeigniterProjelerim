@@ -15,3 +15,11 @@ function get_room_properties()
     $CI->load->model("roomproperties_model");
     return $CI->roomproperties_model->get_all();
 }
+
+function get_room_extra_services($where = array())
+{
+
+    $CI = &get_instance();
+    $CI->load->model("roomextraservices_model");
+    return $CI->roomextraservices_model->get_all($where);
+}
