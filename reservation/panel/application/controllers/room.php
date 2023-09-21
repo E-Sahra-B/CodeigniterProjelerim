@@ -60,4 +60,19 @@ class Room extends CI_Controller
 		$delete = $this->room_model->delete(array("id" => $id));
 		redirect(base_url("room"));
 	}
+
+	public function rankUpdate()
+	{
+		parse_str($this->input->post("data"), $data);
+		$items = $data["sortId"];
+		foreach ($items as $rank => $id) {
+			$this->room_model->update(
+				array(
+					"id"      => $id,
+					"rank !=" => $rank
+				),
+				array("rank" => $rank)
+			);
+		}
+	}
 }

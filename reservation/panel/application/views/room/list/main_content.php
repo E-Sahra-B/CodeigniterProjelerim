@@ -7,6 +7,7 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <thead>
+                            <th>Sırala</th>
                             <th>Oda No</th>
                             <th>Başlık</th>
                             <th>Boyut(m<sup>2</sup>)</th>
@@ -18,9 +19,10 @@
                             <th>isActive</th>
                             <th class="col-md-2">İşlemler</th>
                         </thead>
-                        <tbody>
+                        <tbody class="sortableList" postUrl="room/rankUpdate">
                             <?php foreach ($rows as $row) { ?>
-                                <tr>
+                                <tr id="sortId-<?php echo $row->id; ?>">
+                                    <td><i class="fa fa-retweet fa-lg text-primary"></i></td>
                                     <td><?php echo $row->room_code; ?></td>
                                     <td><?php echo $row->title; ?></td>
                                     <td><?php echo $row->size; ?></td>
