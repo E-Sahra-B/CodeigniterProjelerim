@@ -7,7 +7,7 @@ $(document).ready(function () {
     $.post(base_url + postUrl, { data: data }, function (response) {});
   });
 
-  $(".treeview-menu > li").click(function (event) {
+  $(".treeview-menu > li").click(function (e) {
     var parent = $(this).parent().attr("id");
     var activeItem = $(this).attr("id");
     var url = $(this).find("a").attr("href");
@@ -16,7 +16,7 @@ $(document).ready(function () {
       { parent: parent, activeItem: activeItem },
       function (response) {}
     );
-    event.preventDefault();
+    e.preventDefault();
     setTimeout(function () {
       window.location.href = url;
     }, 100);

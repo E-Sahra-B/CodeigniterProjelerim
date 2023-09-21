@@ -1,3 +1,7 @@
+<?php
+$parent     = $this->session->userdata("parent");
+$activeItem = $this->session->userdata("activeItem");
+?>
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -30,7 +34,7 @@
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <!-- <li class="treeview < ?php echo ($parent == "room_folder") ? "active" : ""; ?>"> -->
+            <li class="treeview <?php echo ($parent == "room_folder") ? "active" : ""; ?>">
             <li class="treeview active">
                 <a href="#">
                     <i class="fa fa-bed"></i>
@@ -41,20 +45,16 @@
                 </a>
 
                 <ul class="treeview-menu" id="room_folder">
-                    <!-- <li class="< ?php echo ($activeItem == "room_category") ? "active" : ""; ?>" id="room_category"> -->
-                    <li id="room_category">
+                    <li class="<?php echo ($activeItem == "room_category") ? "active" : ""; ?>" id="room_category">
                         <a href="<?php echo base_url("roomcategory"); ?>"><i class="fa fa-circle-o"></i> Kategoriler</a>
                     </li>
-                    <!-- <li class="< ?php echo ($activeItem == "room") ? "active" : ""; ?>" id="room"> -->
-                    <li id="room">
+                    <li class="<?php echo ($activeItem == "room") ? "active" : ""; ?>" id="room">
                         <a href="<?php echo base_url("room"); ?>"><i class="fa fa-circle-o"></i> Odalar</a>
                     </li>
-                    <!-- <li class="< ?php echo ($activeItem == "room_properties") ? "active" : ""; ?>" id="room_properties"> -->
-                    <li id="room_properties">
+                    <li class="<?php echo ($activeItem == "room_properties") ? "active" : ""; ?>" id="room_properties">
                         <a href="<?php echo base_url("roomproperties"); ?>"><i class="fa fa-circle-o"></i> Özellikler</a>
                     </li>
-                    <!-- <li class="< ?php echo ($activeItem == "room_extra_services") ? "active" : ""; ?>" id="room_extra_services"> -->
-                    <li id="room_extra_services">
+                    <li class="<?php echo ($activeItem == "room_extra_services") ? "active" : ""; ?>" id="room_extra_services">
                         <a href="<?php echo base_url("roomextraservices"); ?>"><i class="fa fa-circle-o"></i> Ekstra Servisler</a>
                     </li>
                 </ul>

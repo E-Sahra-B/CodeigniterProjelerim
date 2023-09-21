@@ -8,4 +8,16 @@ class Dashboard extends CI_Controller
 	{
 		$this->load->view('dashboard');
 	}
+
+	public function setActiveMenu()
+	{
+		$parent 	= $this->input->post("parent");
+		$activeItem = $this->input->post("activeItem");
+		$this->session->set_userdata(
+			array(
+				"parent" 		=> $parent,
+				"activeItem"	=> $activeItem
+			)
+		);
+	}
 }
