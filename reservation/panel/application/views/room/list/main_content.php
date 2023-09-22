@@ -16,12 +16,12 @@
                             <th>Kapasite</th>
                             <th>Özellikler</th>
                             <th>Ekstra Servisler</th>
-                            <th>isActive</th>
+                            <th>Aktif/Pasif</th>
                             <th class="col-md-2">İşlemler</th>
                         </thead>
                         <tbody class="sortableList" postUrl="room/rankUpdate">
                             <?php foreach ($rows as $row) { ?>
-                                <tr id="sortId-<?php echo $row->id; ?>">
+                                <tr id="sortId-<?php echo $row->id; ?>" class="btn-move">
                                     <td><i class="fa fa-retweet fa-lg text-primary"></i></td>
                                     <td><?php echo $row->room_code; ?></td>
                                     <td><?php echo $row->title; ?></td>

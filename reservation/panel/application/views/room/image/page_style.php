@@ -35,8 +35,4 @@
         top: 50%;
         transform: translate(-50%, -50%);
     }
-
-    .btn-move {
-        cursor: move;
-    }
 </style>

@@ -26,3 +26,7 @@
     width: 40px;
     text-align: center;
 }
+
+.btn-move {
+    cursor: move;
+}
