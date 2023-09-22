@@ -42,11 +42,11 @@
                                             <i class="fa fa-trash fa-lg"></i>
                                         </a> |
 
-                                        <a href="<?php echo base_url("room/imageUploadPage/$row->id"); ?>" data-toggle="tooltip" data-placement="top" title="Resim Güncelle">
+                                        <a href="<?php echo base_url("room/imageUploadPage/$row->id"); ?>" data-toggle="tooltip" data-placement="top" title="Resim İşlemleri">
                                             <i class="fa fa-image fa-lg"></i>
                                         </a> |
 
-                                        <a href="<?php echo base_url("room/newAvailabilityPage/$row->id"); ?>" data-toggle="tooltip" data-placement="top" title="Tarih Sayfası">
+                                        <a href="<?php echo base_url("room/newAvailabilityPage/$row->id"); ?>" data-toggle="tooltip" data-placement="top" title="Tarih Uygunluk">
                                             <i class="fa fa-calendar fa-lg"></i>
                                         </a> |
 

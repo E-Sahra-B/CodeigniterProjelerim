@@ -56,3 +56,50 @@ function get_images($dir = "")
     }
     return $imageList;
 }
+
+function betweenTwoDates($availability_dates)
+{
+    $availability_date = explode("-", $availability_dates);
+    $startDateArr  = explode("/", $availability_date[0]);
+    $finishDateArr = explode("/", $availability_date[1]);
+    $startDateStr  = trim($startDateArr[2]) . "-" . trim($startDateArr[0]) . "-" . trim($startDateArr[1]);
+    $finishDateStr = trim($finishDateArr[2]) . "-" . trim($finishDateArr[0]) . "-" . trim($finishDateArr[1]);
+    $startDate  = new DateTime($startDateStr);
+    $finishDate = new DateTime(date("Y-m-d", strtotime("1 day", strtotime($finishDateStr))));
+    $interval = DateInterval::createFromDateString("1 day");
+    $period = new DatePeriod($startDate, $interval, $finishDate);
+    return $period;
+}
+
+function get_day_from_eng($day)
+{
+    $days = array(
+        "Mon"   => "Pzt",
+        "Tue"   => "Sal",
+        "Wed"   => "Çar",
+        "Thu"   => "Per",
+        "Fri"   => "Cum",
+        "Sat"   => "Cmt",
+        "Sun"   => "Paz",
+    );
+    return $days[$day];
+}
+
+function get_month_from_eng($month)
+{
+    $months = array(
+        "Jan"   => "Oca",
+        "Feb"   => "Şub",
+        "Mar"   => "Mar",
+        "Apr"   => "Nis",
+        "May"   => "May",
+        "Jun"   => "Haz",
+        "Jul"   => "Tem",
+        "Aug"   => "Ağu",
+        "Sep"   => "Eyl",
+        "Oct"   => "Eki",
+        "Nov"   => "Kas",
+        "Dec"   => "Ara",
+    );
+    return $months[$month];
+}

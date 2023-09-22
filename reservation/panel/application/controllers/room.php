@@ -8,6 +8,7 @@ class Room extends CI_Controller
 		parent::__construct();
 		$this->load->model("room_model");
 		$this->load->model("roomimage_model");
+		$this->load->model("roomavailability_model");
 	}
 
 	public function index()
@@ -190,5 +191,42 @@ class Room extends CI_Controller
 				redirect("room/imageUploadPage/$image->room_id");
 			}
 		}
+	}
+
+	public function newAvailabilityPage($room_id)
+	{
+		$viewData =  new stdClass();
+		$viewData->room_id = $room_id;
+		$viewData->availabilities = $this->roomavailability_model->get_all(
+			array(
+				"room_id"	    => $room_id,
+				"daily_date >=" => date("Y-m-d")
+			),
+			"daily_date ASC"
+		);
+		$this->load->view("new_roomavailability", $viewData);
+	}
+
+	public function addNewAvailability($room_id)
+	{
+		$period = betweenTwoDates($this->input->post("availability_date"));
+		foreach ($period as $date) {
+			$record_test = $this->roomavailability_model->get(
+				array(
+					"room_id"	    => $room_id,
+					"daily_date"	=> $date->format("Y-m-d")
+				)
+			);
+			if (empty($record_test)) {
+				$this->roomavailability_model->add(
+					array(
+						"daily_date" => $date->format("Y-m-d"),
+						"room_id" => $room_id,
+						"status" => 1
+					)
+				);
+			}
+		}
+		redirect(base_url("room/newAvailabilityPage/$room_id"));
 	}
 }
