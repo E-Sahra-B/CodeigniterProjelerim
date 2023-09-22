@@ -7,6 +7,7 @@ class Room extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("room_model");
+		$this->load->model("roomimage_model");
 	}
 
 	public function index()
@@ -106,6 +107,88 @@ class Room extends CI_Controller
 				),
 				array("rank" => $rank)
 			);
+		}
+	}
+
+	public function isActiveSetterForImage()
+	{
+		$id 	  = $this->input->post("id");
+		$isActive = ($this->input->post("isActive") == "true") ? 1 : 0;
+		$update = $this->roomimage_model->update(
+			array("id" => $id),
+			array("isActive" => $isActive)
+		);
+	}
+	public function isCoverSetterForImage()
+	{
+		$id 	  = $this->input->post("id");
+		$isCover = ($this->input->post("isCover") == "true") ? 1 : 0;
+		$update = $this->roomimage_model->update(
+			array("id" => $id),
+			array("isCover" => $isCover)
+		);
+	}
+
+	public function roomImageRankUpdate()
+	{
+		parse_str($this->input->post("data"), $data);
+		$items = $data["sortId"];
+		foreach ($items as $rank => $id) {
+			$this->roomimage_model->update(
+				array(
+					"id"      => $id,
+					"rank !=" => $rank
+				),
+				array("rank" => $rank)
+			);
+		}
+	}
+
+	public function imageUploadPage($room_id)
+	{
+		$this->session->set_userdata("room_id", $room_id);
+		$viewData = new stdClass();
+		$viewData->rows = $this->roomimage_model->get_all(
+			array(
+				"room_id"	=> $room_id,
+			),
+			"rank ASC"
+		);
+		$this->load->view("room_image", $viewData);
+	}
+
+	public function upload_image()
+	{
+		$config['upload_path']          = 'uploads/';
+		$config['allowed_types']        = '*';
+		$config['encrypt_name']			= true;
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload('file')) { //		if(!file_exists(FCPATH)){}
+			$error = array('error' => $this->upload->display_errors());
+			print_r($error);
+		} else {
+			$data = array('upload_data' => $this->upload->data());
+			$img_id = $data["upload_data"]['file_name'];
+			$this->roomimage_model->add(
+				array(
+					"img_id"	=> $img_id,
+					"room_id"	=> $this->session->userdata("room_id"),
+					"isActive"	=> 1,
+					"rank"		=> 0
+				)
+			);
+		}
+	}
+
+	public function deleteImage($id)
+	{
+		$image = $this->roomimage_model->get(array("id" => $id));
+		$file_name = FCPATH . "uploads/$image->img_id";
+		if (unlink($file_name)) {
+			$delete = $this->roomimage_model->delete(array("id"	=> $id));
+			if ($delete) {
+				redirect("room/imageUploadPage/$image->room_id");
+			}
 		}
 	}
 }

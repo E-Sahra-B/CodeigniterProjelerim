@@ -23,3 +23,36 @@ function get_room_extra_services($where = array())
     $CI->load->model("roomextraservices_model");
     return $CI->roomextraservices_model->get_all($where);
 }
+
+function get_folder_list($dir)
+{
+    $folder = array();
+    if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (filetype($dir . "/" . $object) == "dir")
+                    array_push($folder, $object);
+            }
+        }
+    }
+    return $folder;
+}
+
+function get_images($dir = "")
+{
+    $imageList = array();
+    if ($handle = opendir($dir)) {
+        while (false !== ($entry = readdir($handle))) {
+            if ($entry != "." && $entry != "..") {
+                $en1 = @explode("_", $entry);
+                $en2 = @explode(".", $en1[1]);
+                if (substr($entry, 0, 1) != "." && ($en2[0] != 'thumb')) {
+                    array_push($imageList, $entry);
+                }
+            }
+        }
+        closedir($handle);
+    }
+    return $imageList;
+}
