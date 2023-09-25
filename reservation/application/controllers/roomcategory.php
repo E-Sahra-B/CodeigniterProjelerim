@@ -6,13 +6,14 @@ class Roomcategory extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("roomcategory_model");
+		$this->load->model("admin_model");
+		$this->table = "room_category";
 	}
 
 	public function index()
 	{
 		$viewData = new stdClass();
-		$viewData->rows = $this->roomcategory_model->get_all(array(), "rank ASC");
+		$viewData->rows = $this->admin_model->get_all($this->table, array(), "rank ASC");
 		$viewData->title = "Kategoriler";
 		$viewData->liste = "Kategori Listesi";
 		$viewData->title2 = "Oda İşlemleri";
@@ -33,7 +34,7 @@ class Roomcategory extends CI_Controller
 	public function editPage($id)
 	{
 		$viewData = new stdClass();
-		$viewData->row = $this->roomcategory_model->get(array("id" => $id));
+		$viewData->row = $this->admin_model->get($this->table, array("id" => $id));
 		$viewData->title = "Kategoriler";
 		$viewData->liste = "Kategori Düzenle";
 		$viewData->title2 = "Oda İşlemleri";
@@ -47,7 +48,7 @@ class Roomcategory extends CI_Controller
 			"title" 	=> $this->input->post("title"),
 			"isActive"	=> 0
 		);
-		$insert = $this->roomcategory_model->add($data);
+		$insert = $this->admin_model->add($this->table, $data);
 
 		if ($insert) {
 			redirect(base_url("panel/roomcategory"));
@@ -61,7 +62,8 @@ class Roomcategory extends CI_Controller
 		$data = array(
 			"title" => $this->input->post("title")
 		);
-		$update = $this->roomcategory_model->update(
+		$update = $this->admin_model->update(
+			$this->table,
 			array("id"	=> $id),
 			$data
 		);
@@ -76,7 +78,8 @@ class Roomcategory extends CI_Controller
 	{
 		$id 	  = $this->input->post("id");
 		$isActive = ($this->input->post("isActive") == "true") ? 1 : 0;
-		$update = $this->roomcategory_model->update(
+		$update = $this->admin_model->update(
+			$this->table,
 			array("id" => $id),
 			array("isActive" => $isActive)
 		);
@@ -84,7 +87,7 @@ class Roomcategory extends CI_Controller
 
 	public function delete($id)
 	{
-		$delete = $this->roomcategory_model->delete(array("id" => $id));
+		$delete = $this->admin_model->delete($this->table, array("id" => $id));
 		redirect(base_url("panel/roomcategory"));
 	}
 
@@ -93,7 +96,8 @@ class Roomcategory extends CI_Controller
 		parse_str($this->input->post("data"), $data);
 		$items = $data["sortId"];
 		foreach ($items as $rank => $id) {
-			$this->roomcategory_model->update(
+			$this->admin_model->update(
+				$this->table,
 				array(
 					"id"      => $id,
 					"rank !=" => $rank

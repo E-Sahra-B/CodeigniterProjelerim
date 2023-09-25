@@ -5,7 +5,8 @@ class Roomextraservices extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("roomextraservices_model");
+		$this->load->model("admin_model");
+		$this->table = "room_extra_services";
 	}
 
 	public function index()
@@ -15,7 +16,7 @@ class Roomextraservices extends CI_Controller
 		$viewData->liste = "Ekstra Servisler Listesi";
 		$viewData->title2 = "Oda İşlemleri";
 		$viewData->islem = "Ekstra Servisler Listesi";
-		$viewData->rows = $this->roomextraservices_model->get_all(array(), "rank ASC");
+		$viewData->rows = $this->admin_model->get_all($this->table, array(), "rank ASC");
 		$this->load->view("panel/roomextraservices", $viewData);
 	}
 
@@ -36,7 +37,7 @@ class Roomextraservices extends CI_Controller
 		$viewData->liste = "Ekstra Servis Düzenle";
 		$viewData->title2 = "Oda İşlemleri";
 		$viewData->islem = "Ekstra Servis Düzenle";
-		$viewData->row = $this->roomextraservices_model->get(array("id" => $id));
+		$viewData->row = $this->admin_model->get($this->table, array("id" => $id));
 		$this->load->view("panel/edit_roomextraservices", $viewData);
 	}
 
@@ -46,7 +47,7 @@ class Roomextraservices extends CI_Controller
 			"title" 	=> $this->input->post("title"),
 			"isActive"	=> 0
 		);
-		$insert = $this->roomextraservices_model->add($data);
+		$insert = $this->admin_model->add($this->table, $data);
 		if ($insert) {
 			redirect(base_url("panel/roomextraservices"));
 		} else {
@@ -59,7 +60,8 @@ class Roomextraservices extends CI_Controller
 		$data = array(
 			"title" => $this->input->post("title")
 		);
-		$update = $this->roomextraservices_model->update(
+		$update = $this->admin_model->update(
+			$this->table,
 			array("id"	=> $id),
 			$data
 		);
@@ -75,7 +77,8 @@ class Roomextraservices extends CI_Controller
 	{
 		$id 	  = $this->input->post("id");
 		$isActive = ($this->input->post("isActive") == "true") ? 1 : 0;
-		$update = $this->roomextraservices_model->update(
+		$update = $this->admin_model->update(
+			$this->table,
 			array("id" => $id),
 			array("isActive" => $isActive)
 		);
@@ -83,7 +86,7 @@ class Roomextraservices extends CI_Controller
 
 	public function delete($id)
 	{
-		$delete = $this->roomextraservices_model->delete(array("id" => $id));
+		$delete = $this->admin_model->delete($this->table, array("id" => $id));
 		redirect(base_url("panel/roomextraservices"));
 	}
 
@@ -92,7 +95,8 @@ class Roomextraservices extends CI_Controller
 		parse_str($this->input->post("data"), $data);
 		$items = $data["sortId"];
 		foreach ($items as $rank => $id) {
-			$this->roomextraservices_model->update(
+			$this->admin_model->update(
+				$this->table,
 				array(
 					"id"      => $id,
 					"rank !=" => $rank

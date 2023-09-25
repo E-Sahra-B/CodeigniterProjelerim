@@ -6,9 +6,10 @@ class Room extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("room_model");
-		$this->load->model("roomimage_model");
-		$this->load->model("roomavailability_model");
+		$this->load->model("admin_model");
+		$this->room = "room";
+		$this->roomimage = "room_image";
+		$this->roomavailability = "room_availability";
 	}
 
 	public function index()
@@ -18,7 +19,7 @@ class Room extends CI_Controller
 		$viewData->liste = "Oda Listesi";
 		$viewData->title2 = "Oda İşlemleri";
 		$viewData->islem = "Oda Listesi";
-		$viewData->rows = $this->room_model->get_all(array(), "rank ASC");
+		$viewData->rows = $this->admin_model->get_all($this->room, array(), "rank ASC");
 		$this->load->view("panel/room", $viewData);
 	}
 
@@ -35,7 +36,7 @@ class Room extends CI_Controller
 	public function editPage($id)
 	{
 		$viewData = new stdClass();
-		$viewData->row = $this->room_model->get(array("id" => $id));
+		$viewData->row = $this->admin_model->get($this->room, array("id" => $id));
 		$viewData->title = "Odalar";
 		$viewData->liste = "Oda Düzenle";
 		$viewData->title2 = "Oda İşlemleri";
@@ -59,7 +60,7 @@ class Room extends CI_Controller
 			"room_extra_services"	=> $room_extra_services,
 			"isActive"				=> 0
 		);
-		$insert = $this->room_model->add($data);
+		$insert = $this->admin_model->add($this->room, $data);
 		if ($insert) {
 			redirect(base_url("panel/room"));
 		} else {
@@ -82,7 +83,8 @@ class Room extends CI_Controller
 			"room_properties" 		=> $room_properties,
 			"room_extra_services"	=> $room_extra_services
 		);
-		$update = $this->room_model->update(
+		$update = $this->admin_model->update(
+			$this->room,
 			array("id"	=> $id),
 			$data
 		);
@@ -97,7 +99,8 @@ class Room extends CI_Controller
 	{
 		$id 	  = $this->input->post("id");
 		$isActive = ($this->input->post("isActive") == "true") ? 1 : 0;
-		$update = $this->room_model->update(
+		$update = $this->admin_model->update(
+			$this->room,
 			array("id" => $id),
 			array("isActive" => $isActive)
 		);
@@ -105,7 +108,7 @@ class Room extends CI_Controller
 
 	public function delete($id)
 	{
-		$delete = $this->room_model->delete(array("id" => $id));
+		$delete = $this->admin_model->delete($this->room, array("id" => $id));
 		redirect(base_url("panel/room"));
 	}
 
@@ -114,7 +117,8 @@ class Room extends CI_Controller
 		parse_str($this->input->post("data"), $data);
 		$items = $data["sortId"];
 		foreach ($items as $rank => $id) {
-			$this->room_model->update(
+			$this->admin_model->update(
+				$this->room,
 				array(
 					"id"      => $id,
 					"rank !=" => $rank
@@ -128,7 +132,8 @@ class Room extends CI_Controller
 	{
 		$id 	  = $this->input->post("id");
 		$isActive = ($this->input->post("isActive") == "true") ? 1 : 0;
-		$update = $this->roomimage_model->update(
+		$update = $this->admin_model->update(
+			$this->roomimage,
 			array("id" => $id),
 			array("isActive" => $isActive)
 		);
@@ -137,7 +142,8 @@ class Room extends CI_Controller
 	{
 		$id 	  = $this->input->post("id");
 		$isCover = ($this->input->post("isCover") == "true") ? 1 : 0;
-		$update = $this->roomimage_model->update(
+		$update = $this->admin_model->update(
+			$this->roomimage,
 			array("id" => $id),
 			array("isCover" => $isCover)
 		);
@@ -148,7 +154,8 @@ class Room extends CI_Controller
 		parse_str($this->input->post("data"), $data);
 		$items = $data["sortId"];
 		foreach ($items as $rank => $id) {
-			$this->roomimage_model->update(
+			$this->admin_model->update(
+				$this->roomimage,
 				array(
 					"id"      => $id,
 					"rank !=" => $rank
@@ -162,7 +169,8 @@ class Room extends CI_Controller
 	{
 		$this->session->set_userdata("room_id", $room_id);
 		$viewData = new stdClass();
-		$viewData->rows = $this->roomimage_model->get_all(
+		$viewData->rows = $this->admin_model->get_all(
+			$this->roomimage,
 			array(
 				"room_id"	=> $room_id,
 			),
@@ -188,7 +196,8 @@ class Room extends CI_Controller
 		} else {
 			$data = array('upload_data' => $this->upload->data());
 			$img_id = $data["upload_data"]['file_name'];
-			$this->roomimage_model->add(
+			$this->admin_model->add(
+				$this->roomimage,
 				array(
 					"img_id"	=> $img_id,
 					"room_id"	=> $this->session->userdata("room_id"),
@@ -201,10 +210,10 @@ class Room extends CI_Controller
 
 	public function deleteImage($id)
 	{
-		$image = $this->roomimage_model->get(array("id" => $id));
+		$image = $this->admin_model->get($this->roomimage, array("id" => $id));
 		$file_name = FCPATH . "uploads/$image->img_id";
 		if (unlink($file_name)) {
-			$delete = $this->roomimage_model->delete(array("id"	=> $id));
+			$delete = $this->admin_model->delete($this->roomimage, array("id" => $id));
 			if ($delete) {
 				redirect("panel/room/imageUploadPage/$image->room_id");
 			}
@@ -215,7 +224,8 @@ class Room extends CI_Controller
 	{
 		$viewData =  new stdClass();
 		$viewData->room_id = $room_id;
-		$viewData->availabilities = $this->roomavailability_model->get_all(
+		$viewData->availabilities = $this->admin_model->get_all(
+			$this->roomavailability,
 			array(
 				"room_id"	    => $room_id,
 				"daily_date >=" => date("Y-m-d")
@@ -233,14 +243,16 @@ class Room extends CI_Controller
 	{
 		$period = betweenTwoDates($this->input->post("availability_date"));
 		foreach ($period as $date) {
-			$record_test = $this->roomavailability_model->get(
+			$record_test = $this->admin_model->get(
+				$this->roomavailability,
 				array(
 					"room_id"	    => $room_id,
 					"daily_date"	=> $date->format("Y-m-d")
 				)
 			);
 			if (empty($record_test)) {
-				$this->roomavailability_model->add(
+				$this->admin_model->add(
+					$this->roomavailability,
 					array(
 						"daily_date" => $date->format("Y-m-d"),
 						"room_id" => $room_id,

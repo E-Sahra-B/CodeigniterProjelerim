@@ -5,7 +5,8 @@ class Roomproperties extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("roomproperties_model");
+		$this->load->model("admin_model");
+		$this->table = "room_properties";
 	}
 
 	public function index()
@@ -15,7 +16,7 @@ class Roomproperties extends CI_Controller
 		$viewData->liste = "Özellik Listesi";
 		$viewData->title2 = "Oda İşlemleri";
 		$viewData->islem = "Özellik Listesi";
-		$viewData->rows = $this->roomproperties_model->get_all(array(), "rank ASC");
+		$viewData->rows = $this->admin_model->get_all($this->table, array(), "rank ASC");
 		$this->load->view("panel/roomproperties", $viewData);
 	}
 
@@ -26,7 +27,7 @@ class Roomproperties extends CI_Controller
 		$viewData->liste = "Özellik Ekle";
 		$viewData->title2 = "Oda İşlemleri";
 		$viewData->islem = "Özellik Ekle";
-		$this->load->view("panel/new_roomproperties");
+		$this->load->view("panel/new_roomproperties", $viewData);
 	}
 
 	public function editPage($id)
@@ -36,7 +37,7 @@ class Roomproperties extends CI_Controller
 		$viewData->liste = "Özellik Düzenle";
 		$viewData->title2 = "Oda İşlemleri";
 		$viewData->islem = "Özellik Düzenle";
-		$viewData->row = $this->roomproperties_model->get(array("id" => $id));
+		$viewData->row = $this->admin_model->get($this->table, array("id" => $id));
 		$this->load->view("panel/edit_roomproperties", $viewData);
 	}
 
@@ -46,7 +47,7 @@ class Roomproperties extends CI_Controller
 			"title" 	=> $this->input->post("title"),
 			"isActive"	=> 0
 		);
-		$insert = $this->roomproperties_model->add($data);
+		$insert = $this->admin_model->add($this->table, $data);
 		if ($insert) {
 			redirect(base_url("panel/roomproperties"));
 		} else {
@@ -59,7 +60,8 @@ class Roomproperties extends CI_Controller
 		$data = array(
 			"title" => $this->input->post("title")
 		);
-		$update = $this->roomproperties_model->update(
+		$update = $this->admin_model->update(
+			$this->table,
 			array("id"	=> $id),
 			$data
 		);
@@ -74,7 +76,8 @@ class Roomproperties extends CI_Controller
 	{
 		$id 	  = $this->input->post("id");
 		$isActive = ($this->input->post("isActive") == "true") ? 1 : 0;
-		$update = $this->roomproperties_model->update(
+		$update = $this->admin_model->update(
+			$this->table,
 			array("id" => $id),
 			array("isActive" => $isActive)
 		);
@@ -82,7 +85,7 @@ class Roomproperties extends CI_Controller
 
 	public function delete($id)
 	{
-		$delete = $this->roomproperties_model->delete(array("id" => $id));
+		$delete = $this->admin_model->delete($this->table, array("id" => $id));
 		redirect(base_url("panel/roomproperties"));
 	}
 
@@ -91,7 +94,8 @@ class Roomproperties extends CI_Controller
 		parse_str($this->input->post("data"), $data);
 		$items = $data["sortId"];
 		foreach ($items as $rank => $id) {
-			$this->roomproperties_model->update(
+			$this->admin_model->update(
+				$this->table,
 				array(
 					"id"      => $id,
 					"rank !=" => $rank
