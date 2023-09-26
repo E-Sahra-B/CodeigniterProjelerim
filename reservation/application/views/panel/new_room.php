@@ -25,6 +25,7 @@
     <!-- ./wrapper -->
     <?php $this->load->view("panel/includes/include_script"); ?>
     <?php $this->load->view("panel/room/add/page_script"); ?>
+
 </body>
 
 </html>

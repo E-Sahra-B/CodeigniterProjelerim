@@ -6,13 +6,6 @@
     <script>
         $(document).ready(function() {
             CKEDITOR.replace('detail');
-            //Initialize Select2 Elements
             $(".select2").select2();
         });
-
-
-        // $(function() {
-        //     CKEDITOR.replace('detail');
-        //     $(".select2").select2();
-        // });
     </script>

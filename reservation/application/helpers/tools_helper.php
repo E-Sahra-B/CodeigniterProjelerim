@@ -4,24 +4,24 @@ function get_room_category()
 {
 
     $CI = &get_instance();
-    $CI->load->model("roomcategory_model");
-    return $CI->roomcategory_model->get_all();
+    $CI->load->model("admin_model");
+    return $CI->admin_model->get_all("room_category");
 }
 
 function get_room_properties()
 {
 
     $CI = &get_instance();
-    $CI->load->model("roomproperties_model");
-    return $CI->roomproperties_model->get_all();
+    $CI->load->model("admin_model");
+    return $CI->admin_model->get_all("room_properties");
 }
 
 function get_room_extra_services($where = array())
 {
 
     $CI = &get_instance();
-    $CI->load->model("roomextraservices_model");
-    return $CI->roomextraservices_model->get_all($where);
+    $CI->load->model("admin_model");
+    return $CI->admin_model->get_all("room_extra_services", $where);
 }
 
 function get_folder_list($dir)
