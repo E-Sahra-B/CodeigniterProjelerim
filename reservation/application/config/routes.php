@@ -23,4 +23,7 @@ $route["panel/roomextraservices/(.*)"] = "roomextraservices/$1";
 $route["panel"]         = "dashboard/index";
 $route["panel/(.*)"]    = "dashboard/$1";
 
+$route["homeroom"]      = "homeroom/index";
+$route["homeroom/(.*)"] = "homeroom/$1";
+
 $route["^(.*)"] = "index/$1";

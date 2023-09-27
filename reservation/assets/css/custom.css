@@ -1,0 +1,29 @@
+.mb10{
+    margin-bottom: 10px;
+}
+
+.mask .content p:first-child{
+    height: 50px;
+}
+
+.total_price_column{
+    vertical-align: middle; 
+    color: black; 
+    font-size: 18px; 
+    font-weight: bold;
+}
+.middle{
+    vertical-align: middle;
+}
+
+.mt22{
+    margin-top:22px;
+}
+
+.w50{
+    width:50px;
+}
+
+.h100{
+    height: 100px;
+}

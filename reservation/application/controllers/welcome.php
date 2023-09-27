@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Home extends CI_Controller
+class Welcome extends CI_Controller
 {
 
     public function index()
@@ -14,18 +14,13 @@ class Home extends CI_Controller
         $contact = $this->contact_model->get(["isActive"   => 1]);
         $rooms = $this->room_model->get_all(["isActive"   => 1], "rank ASC");
         $room_properties = $this->roomproperties_model->get_all(["isActive"   => 1]);
+        $room_images = $this->roomimage_model->get_all(["isActive"   => 1, "isCover"   => 1]);
 
         $property_list = array();
         foreach ($room_properties as $property) {
             $property_list[$property->id] = $property->title;
         }
 
-        $room_images = $this->roomimage_model->get_all(
-            array(
-                "isActive"  => 1,
-                "isCover"   => 1
-            )
-        );
         $cover_image_list = array();
         foreach ($room_images as $image) {
             $cover_image_list[$image->room_id] = $image->img_id;

@@ -103,3 +103,36 @@ function get_month_from_eng($month)
     );
     return $months[$month];
 }
+
+function get_month($date)
+{
+    return date("d", strtotime($date)) . " " . get_month_from_eng(date("M", strtotime($date))) . " " . get_day_from_eng(date("D", strtotime($date)));
+}
+
+function get_class_name($str)
+{
+    $str = strtolower($str);
+    $tr   = array("ş", "ü", "ğ", "ç", "i", "ı", "ö", ".", ",", "?", " ");
+    $eng  = array("s", "u", "g", "c", "i", "i", "o", "",  "",  "",  "_");
+    $class = str_replace($tr, $eng, $str);
+    return $class;
+}
+
+function get_prices($where = array())
+{
+    $CI = &get_instance();
+    $CI->load->model("roompricing_model");
+    $times = $CI->roompricing_model->get_all($where);
+    $price = "null";
+    foreach ($times as $time) {
+        if ($times) {
+            $price = $time->price;
+        }
+    }
+    return $price;
+}
+
+function fiyat($fiyat)
+{
+    return number_format($fiyat, 2, ',', '.');
+}
