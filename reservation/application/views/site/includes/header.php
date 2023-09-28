@@ -25,9 +25,11 @@
                         <div class="social-icons">
                             <?php if ($contact->facebook) { ?>
                                 <a target="_blank" href="<?php echo $contact->facebook; ?>"><i class="fa fa-facebook"></i></a>
-                            <?php } if ($contact->twitter) { ?>
+                            <?php }
+                            if ($contact->twitter) { ?>
                                 <a target="_blank" href="<?php echo $contact->twitter; ?>"><i class="fa fa-twitter"></i></a>
-                            <?php } if ($contact->youtube) { ?>
+                            <?php }
+                            if ($contact->youtube) { ?>
                                 <a target="_blank" href="<?php echo $contact->youtube; ?>"><i class="fa fa-youtube-play"></i></a>
                             <?php } ?>
                         </div>
@@ -66,7 +68,7 @@
                             <li><a href="#">Video Gallery</a></li>
                         </ul>
                     </li> -->
-                    <li><a href="#">İletişim</a></li>
+                    <li><a href="<?php echo base_url("homeroom/contact"); ?>">İletişim</a></li>
                 </ul>
             </div>
         </div>

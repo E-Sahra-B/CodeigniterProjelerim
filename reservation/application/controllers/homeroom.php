@@ -159,4 +159,29 @@ class homeroom extends CI_Controller
     {
         print_r($this->input->post("book"));
     }
+
+    public function contact()
+    {
+        $this->load->model("contact_model");
+        $contact = $this->contact_model->get(["isActive"   => 1]);
+        $viewData = new stdClass();
+        $viewData->contact = $contact;
+        $this->load->view("site/contact", $viewData);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->load->model("admin_model");
+            $data = array(
+                "gonderen"           => $this->input->post("gonderen"),
+                "mail"               => $this->input->post("mail"),
+                "baslik"             => $this->input->post("baslik"),
+                "icerik"             => $this->input->post("icerik"),
+                "isActive"           => 0
+            );
+            $result = $this->admin_model->add('message', $data);
+            if ($result == true) {
+                redirect('homeroom/contact');
+            } else {
+                redirect('homeroom/contact');
+            }
+        }
+    }
 }
